@@ -1,6 +1,6 @@
 
 from fastapi import FastAPI
-from rules import avaliar_risco
+from .rules import avaliar_risco
 
 app = FastAPI(
     title="Agente de Risco Financeiro",
