@@ -1,0 +1,4 @@
+Rodar - Pra encontrar a pasta API
+uvicorn api.index:app --reload
+
+O que você construiu hoje é um agente baseado em regras (rule-based agent).
