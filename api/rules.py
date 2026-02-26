@@ -85,5 +85,5 @@ def avaliar_risco(dados: dict) -> dict:
         "score": score,
         "motivos": motivos,
         "acao_sugerida": acao,
-        "nome_cliente": nome
+        "nome_cliente_v3": nome
     }
