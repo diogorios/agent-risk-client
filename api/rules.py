@@ -5,6 +5,9 @@ def avaliar_risco(dados: dict) -> dict:
 
     resumo = dados["contas_receber"]["resumo_historico"]
 
+    cliente = dados.get("cliente", {})
+    nome = cliente.get("nome", "")
+
     # Regra 1: média de atraso
     media_atraso = resumo.get("media_dias_atraso", 0) or 0
     if media_atraso > 10:
@@ -48,5 +51,6 @@ def avaliar_risco(dados: dict) -> dict:
         "nivel_risco": nivel,
         "score": score,
         "motivos": motivos,
-        "acao_sugerida": acao
+        "acao_sugerida": acao,
+        "nome_cliente": nome
     }
