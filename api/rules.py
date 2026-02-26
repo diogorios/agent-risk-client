@@ -10,14 +10,32 @@ def avaliar_risco(dados: dict) -> dict:
 
     # Regra 1: média de atraso
     media_atraso = resumo.get("media_dias_atraso", 0) or 0
-    if media_atraso > 10:
+    
+    if media_atraso >= 10:
         score += 30
         motivos.append(f"Média de atraso elevada ({media_atraso:.1f} dias)")
+    elif media_atraso >= 5:
+        score += 15
+        motivos.append(f"Média de atraso frequente ({media_atraso:.1f} dias)")
+
+    #if media_atraso > 10:
+    #    score += 30
+    #    motivos.append(f"Média de atraso elevada ({media_atraso:.1f} dias)")
 
     # Regra 2: títulos atrasados
-    if resumo.get("titulos_atrasados", 0) > 2:
+    titulos_atrasados = resumo.get("titulos_atrasados", 0)
+
+    if titulos_atrasados >= 2:
         score += 20
-        motivos.append("Quantidade relevante de títulos em atraso")
+        motivos.append(f"{titulos_atrasados} títulos em atraso")
+
+    elif titulos_atrasados == 1:
+        score += 10
+        motivos.append("Cliente possui 1 título em atraso")
+
+    #if resumo.get("titulos_atrasados", 0) > 1:
+    #    score += 20
+    #    motivos.append("Quantidade relevante de títulos em atraso")
 
     # Regra 3: valor em aberto proporcional
     valor_aberto = resumo.get("valor_em_aberto", 0)
@@ -30,18 +48,33 @@ def avaliar_risco(dados: dict) -> dict:
     # Classificação final
     if score >= 60:
         nivel = "ALTO"
+
+    elif score >= 20:
+        nivel = "MEDIO"
+
+    else:
+        nivel = "BAIXO"
+    
+    # Definir ações separadamente
+    if score >= 60:
         acao = [
             "Bloquear novos créditos",
             "Acionar cobrança imediata"
         ]
+
     elif score >= 30:
-        nivel = "MEDIO"
         acao = [
             "Permitir vendas com alerta",
             "Acompanhar cobrança"
         ]
+
+    elif score >= 20:
+        acao = [
+            "Permitir vendas com limite reduzido",
+            "Acompanhar pagamento atual"
+        ]
+
     else:
-        nivel = "BAIXO"
         acao = [
             "Cliente liberado",
             "Monitoramento padrão"
