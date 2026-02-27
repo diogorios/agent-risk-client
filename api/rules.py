@@ -18,24 +18,15 @@ def avaliar_risco(dados: dict) -> dict:
         score += 15
         motivos.append(f"Média de atraso frequente ({media_atraso:.1f} dias)")
 
-    #if media_atraso > 10:
-    #    score += 30
-    #    motivos.append(f"Média de atraso elevada ({media_atraso:.1f} dias)")
-
     # Regra 2: títulos atrasados
     titulos_atrasados = resumo.get("titulos_atrasados", 0)
 
     if titulos_atrasados >= 2:
         score += 20
         motivos.append(f"{titulos_atrasados} títulos em atraso")
-
     elif titulos_atrasados == 1:
         score += 10
         motivos.append("Cliente possui 1 título em atraso")
-
-    #if resumo.get("titulos_atrasados", 0) > 1:
-    #    score += 20
-    #    motivos.append("Quantidade relevante de títulos em atraso")
 
     # Regra 3: valor em aberto proporcional
     valor_aberto = resumo.get("valor_em_aberto", 0)
